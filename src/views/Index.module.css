@@ -1,0 +1,70 @@
+.indexContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+}
+
+.welcomeCard {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 16px;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+.welcomeHeader {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.welcomeHeader h1 {
+  margin: 0 0 10px 0;
+  font-size: 32px;
+  color: #303133;
+  font-weight: 600;
+}
+
+.subtitle {
+  margin: 0;
+  color: #909399;
+  font-size: 16px;
+}
+
+.userInfo {
+  margin-bottom: 30px;
+}
+
+.userInfo :global(.ant-descriptions-item-label) {
+  font-weight: 600;
+  width: 120px;
+}
+
+.userInfo :global(.ant-descriptions-item-bordered-label) {
+  background: #f5f7fa;
+}
+
+.actionButtons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+  .welcomeCard {
+    padding: 30px 20px;
+  }
+
+  .actionButtons {
+    flex-direction: column;
+  }
+
+  .actionButtons :global(.ant-btn) {
+    width: 100%;
+  }
+}

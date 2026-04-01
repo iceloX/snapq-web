@@ -1,0 +1,254 @@
+/* ============================================
+   Split Layout Login Page
+   ============================================ */
+
+.loginWrapper {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* ── Left Panel: Illustration ── */
+.leftPanel {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.leftImage {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.pupil {
+  transition: cx 0.1s ease-out, cy 0.1s ease-out;
+}
+
+.closedEye {
+  opacity: 1;
+  transition: opacity 0.25s ease;
+}
+
+/* ── Right Panel: Form ── */
+.rightPanel {
+  width: 50%;
+  height: 100%;
+  background-color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form {
+  width: 100%;
+  max-width: 400px;
+  padding: 0 24px;
+}
+
+.title {
+  font-size: 30px;
+  font-weight: 700;
+  color: #000000;
+  text-align: center;
+  margin: 0 0 8px 0;
+  letter-spacing: -0.5px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #9CA3AF;
+  text-align: center;
+  margin: 0 0 32px 0;
+}
+
+/* ── Form Fields ── */
+.field {
+  margin-bottom: 16px;
+}
+
+.label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 6px;
+}
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  width: 100%;
+  height: 48px;
+  padding: 0 48px 0 20px;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 9999px;
+  font-size: 14px;
+  color: #111827;
+  background: #FFFFFF;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
+}
+
+.input:focus {
+  border-color: #000000;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
+}
+
+.input::placeholder {
+  color: #9CA3AF;
+}
+
+.eyeBtn {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #9CA3AF;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s ease;
+}
+
+.eyeBtn:hover {
+  color: #374151;
+}
+
+/* ── Helpers Row ── */
+.helpers {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  font-size: 13px;
+}
+
+.remember {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #6B7280;
+  cursor: pointer;
+  user-select: none;
+}
+
+.remember input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #000000;
+  cursor: pointer;
+}
+
+.forgotLink {
+  font-size: 13px;
+  font-weight: 600;
+  color: #000000;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.forgotLink:hover {
+  opacity: 0.7;
+}
+
+/* ── Buttons ── */
+.loginBtn {
+  width: 100%;
+  height: 48px;
+  border-radius: 9999px;
+  background-color: #000000;
+  color: #FFFFFF;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.15s ease, transform 0.1s ease;
+  margin-bottom: 12px;
+}
+
+.loginBtn:hover {
+  opacity: 0.85;
+}
+
+.loginBtn:active {
+  transform: scale(0.98);
+}
+
+.loginBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.googleBtn {
+  width: 100%;
+  height: 48px;
+  border-radius: 9999px;
+  background-color: #FFFFFF;
+  color: #374151;
+  font-size: 15px;
+  font-weight: 500;
+  border: 1.5px solid #E5E7EB;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+  margin-bottom: 0;
+}
+
+.googleBtn:hover {
+  background-color: #F9FAFB;
+  border-color: #D1D5DB;
+}
+
+/* ── Footer ── */
+.footer {
+  text-align: center;
+  font-size: 14px;
+  color: #6B7280;
+  margin-top: 32px;
+}
+
+.signUpLink {
+  font-weight: 700;
+  color: #000000;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.signUpLink:hover {
+  opacity: 0.7;
+}
+
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .pupil,
+  .eyelid,
+  .dotEye,
+  .mouth,
+  .input,
+  .loginBtn,
+  .googleBtn,
+  .eyeBtn {
+    transition-duration: 0.01ms !important;
+  }
+}
