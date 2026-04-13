@@ -18,8 +18,7 @@ dist-ssr
 !.env.example
 
 # Editor directories and files
-.vscode/*
-!.vscode/extensions.json
+.vscode/
 .idea
 .DS_Store
 *.suo
@@ -31,5 +30,6 @@ dist-ssr
 # AI tools
 .ace-tool/
 .claude/
+.claude/plans/
 .omc/
 .playwright-mcp/
