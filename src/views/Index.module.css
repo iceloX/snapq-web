@@ -121,6 +121,26 @@
   opacity: 1 !important;
 }
 
+/* ── Login Layout ── */
+.loginLayout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 200px;
+  width: 100%;
+}
+
+.loginCatSide {
+  flex-shrink: 0;
+}
+
+.loginCatImg {
+  width: 480px;
+  height: auto;
+  object-fit: contain;
+  opacity: 0.9;
+}
+
 /* ── Login Form ── */
 .loginForm {
   display: flex;
@@ -128,7 +148,8 @@
   align-items: center;
   gap: 16px;
   width: 100%;
-  max-width: 360px;
+  max-width: 320px;
+  flex-shrink: 0;
 }
 
 .loginTitle {
@@ -264,7 +285,7 @@
 .waterfall {
   display: flex;
   gap: 3px;
-  padding: 3px 8px;
+  padding: 3px;
   max-width: 100%;
   margin: 0 auto;
 }

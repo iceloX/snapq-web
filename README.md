@@ -1,4 +1,4 @@
-# SnapQ Web
+# CatGallery Web
 
 基于 React 19 + Vite + Ant Design 构建的现代化 Web 应用，提供用户登录认证功能。
 

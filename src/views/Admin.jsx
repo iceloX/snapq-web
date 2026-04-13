@@ -34,7 +34,7 @@ function Admin() {
 
   const handleLogout = async () => {
     await authService.logout()
-    navigate('/login')
+    navigate('/index')
     message.success('已成功退出登录')
   }
 
@@ -53,7 +53,7 @@ function Admin() {
         width={220}
       >
         <div style={{ height: 64, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: collapsed ? 16 : 20, fontWeight: 700, whiteSpace: 'nowrap', overflow: 'hidden' }}>
-          {collapsed ? 'SQ' : 'SnapQ'}
+          {collapsed ? 'CG' : 'CatGallery'}
         </div>
         <Menu
           theme="dark"

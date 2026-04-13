@@ -188,7 +188,7 @@ function Index() {
       <header className={`${styles.header} ${isLoggedIn ? styles.headerCompact : ''} ${darkMode ? styles.headerDark : styles.headerLight}`}>
         {isLoggedIn ? (
           <>
-            <img src={catLogo} alt="SnapQ Logo" className={styles.catLogo} />
+            <img src={catLogo} alt="CatGallery Logo" className={styles.catLogo} />
             <div className={styles.headerRight}>
               <button className={styles.themeBtn} onClick={() => setDarkMode(v => !v)}>
                 {darkMode ? <SunOutlined /> : <MoonOutlined />}
@@ -208,29 +208,33 @@ function Index() {
             </div>
           </>
         ) : (
-          <form className={styles.loginForm} onSubmit={handleLogin}>
-            <div className={styles.loginTitle}>
-              <PictureOutlined style={{ marginRight: 10 }} />
-              SnapQ
+          <div className={styles.loginLayout}>
+            <div className={styles.loginCatSide}>
+              <img src={catLogo} alt="CatGallery" className={styles.loginCatImg} />
             </div>
-            <input
-              className={styles.loginInput}
-              type="email"
-              placeholder="邮箱"
-              value={loginEmail}
-              onChange={e => setLoginEmail(e.target.value)}
-            />
-            <input
-              className={styles.loginInput}
-              type="password"
-              placeholder="密码"
-              value={loginPassword}
-              onChange={e => setLoginPassword(e.target.value)}
-            />
-            <button className={styles.loginBtn} type="submit" disabled={loginLoading}>
-              {loginLoading ? '登录中...' : '登 录'}
-            </button>
-          </form>
+            <form className={styles.loginForm} onSubmit={handleLogin}>
+              <div className={styles.loginTitle}>
+                CatGallery
+              </div>
+              <input
+                className={styles.loginInput}
+                type="email"
+                placeholder="邮箱"
+                value={loginEmail}
+                onChange={e => setLoginEmail(e.target.value)}
+              />
+              <input
+                className={styles.loginInput}
+                type="password"
+                placeholder="密码"
+                value={loginPassword}
+                onChange={e => setLoginPassword(e.target.value)}
+              />
+              <button className={styles.loginBtn} type="submit" disabled={loginLoading}>
+                {loginLoading ? '登录中...' : '登 录'}
+              </button>
+            </form>
+          </div>
         )}
       </header>
 

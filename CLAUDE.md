@@ -1,8 +1,8 @@
-# SnapQ Web 项目文档
+# CatGallery Web 项目文档
 
 ## 项目愿景
 
-SnapQ Web 是一个基于 React 19 + Vite 构建的现代化 Web 应用，集成了 Ant Design UI 组件库和 React Router，提供用户登录/认证功能的企业级前端解决方案。
+CatGallery Web 是一个基于 React 19 + Vite 构建的现代化 Web 应用，集成了 Ant Design UI 组件库和 React Router，提供用户登录/认证功能的企业级前端解决方案。
 
 ## 快速开始
 

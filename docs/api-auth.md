@@ -1,10 +1,10 @@
-# SnapQ 认证模块 API 接口文档
+# CatGallery 认证模块 API 接口文档
 
 > 版本: v1.0 | 更新日期: 2026-04-10
 
 ## 概述
 
-本文档定义了 SnapQ 认证模块的 RESTful API 接口规范，供后端开发参考实现。
+本文档定义了 CatGallery 认证模块的 RESTful API 接口规范，供后端开发参考实现。
 
 - **Base URL**: `/api`
 - **认证方式**: Bearer Token (JWT)
