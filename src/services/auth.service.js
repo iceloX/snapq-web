@@ -3,8 +3,7 @@
  * Handles user authentication, token management, and session storage
  */
 
-// API base URL - configure based on environment
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api'
+import { api } from './api'
 
 // Token storage keys
 const TOKEN_KEY = 'auth_token'
@@ -65,96 +64,20 @@ const tokenStorage = {
 }
 
 /**
- * API request helper with authentication
- */
-async function apiRequest(endpoint, options = {}) {
-  const token = tokenStorage.getToken()
-
-  const headers = {
-    'Content-Type': 'application/json',
-    ...options.headers
-  }
-
-  if (token) {
-    headers['Authorization'] = `Bearer ${token}`
-  }
-
-  const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-    ...options,
-    headers
-  })
-
-  if (!response.ok) {
-    const error = await response.json().catch(() => ({ message: 'Request failed' }))
-    throw new Error(error.message || `HTTP error! status: ${response.status}`)
-  }
-
-  return response.json()
-}
-
-/**
  * Authentication service
  */
 export const authService = {
   /**
    * Login user with credentials
-   * @param {string} username - User's username
+   * @param {string} email - User's email or username
    * @param {string} password - User's password
    * @param {boolean} rememberMe - Whether to persist session
    * @returns {Promise<{ user: object, token: string }>}
    */
-  async login(username, password, rememberMe = false) {
-    // In development, use mock authentication
-    // TODO: Replace with actual API call in production
-    if (import.meta.env.DEV) {
-      return this.mockLogin(username, password, rememberMe)
-    }
+  async login(email, password, rememberMe = false) {
+    const data = await api.post('/auth/login', { email, password, rememberMe })
 
-    const response = await apiRequest('/auth/login', {
-      method: 'POST',
-      body: JSON.stringify({ username, password, rememberMe })
-    })
-
-    const { user, token } = response
-
-    tokenStorage.setToken(token, rememberMe)
-    tokenStorage.setUser(user, rememberMe)
-    tokenStorage.setRememberMe(rememberMe)
-
-    return { user, token }
-  },
-
-  /**
-   * Mock login for development
-   * TODO: Remove in production
-   */
-  async mockLogin(username, password, rememberMe = false) {
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 500))
-
-    // Mock credentials (replace with actual API in production)
-    const validCredentials = [
-      { username: 'admin', password: 'admin123', role: 'admin' },
-      { username: 'user', password: 'user123', role: 'user' }
-    ]
-
-    const validUser = validCredentials.find(
-      cred => cred.username === username && cred.password === password
-    )
-
-    if (!validUser) {
-      throw new Error('用户名或密码错误')
-    }
-
-    // Generate mock token
-    const token = `mock_token_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
-
-    const user = {
-      id: validUser.username === 'admin' ? 1 : 2,
-      username: validUser.username,
-      role: validUser.role,
-      loginTime: new Date().toISOString()
-    }
+    const { token, user } = data
 
     tokenStorage.setToken(token, rememberMe)
     tokenStorage.setUser(user, rememberMe)
@@ -168,10 +91,7 @@ export const authService = {
    */
   async logout() {
     try {
-      // Call logout API if available
-      if (!import.meta.env.DEV) {
-        await apiRequest('/auth/logout', { method: 'POST' })
-      }
+      await api.post('/auth/logout')
     } catch (error) {
       console.warn('Logout API call failed:', error)
     } finally {
@@ -208,16 +128,8 @@ export const authService = {
    * @returns {Promise<string>}
    */
   async refreshToken() {
-    if (import.meta.env.DEV) {
-      const user = this.getCurrentUser()
-      if (!user) throw new Error('No user session')
-      const newToken = `mock_token_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
-      tokenStorage.setToken(newToken, tokenStorage.getRememberMe())
-      return newToken
-    }
-
-    const response = await apiRequest('/auth/refresh', { method: 'POST' })
-    const { token } = response
+    const data = await api.post('/auth/refresh')
+    const { token } = data
     tokenStorage.setToken(token, tokenStorage.getRememberMe())
     return token
   }

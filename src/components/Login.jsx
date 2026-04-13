@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { message } from 'antd'
 import { authService } from '../services/auth.service'
 import styles from './Login.module.css'
 
@@ -230,14 +231,43 @@ function EyeIcon({ visible }) {
 function Login() {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
-  const [email, setEmail] = useState('123123@gmail.com')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [rememberMe, setRememberMe] = useState(false)
   const [passwordFocused, setPasswordFocused] = useState(false)
+  const [emailError, setEmailError] = useState('')
+
+  const validateEmail = (value) => {
+    if (!value) return ''
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    return re.test(value) ? '' : '请输入有效的邮箱地址'
+  }
+
+  const handleEmailBlur = () => {
+    setEmailError(validateEmail(email))
+  }
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value)
+    if (emailError) setEmailError('')
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    if (!email) {
+      message.warning('请输入邮箱')
+      return
+    }
+    if (!password) {
+      message.warning('请输入密码')
+      return
+    }
+    const emailErr = validateEmail(email)
+    if (emailErr) {
+      setEmailError(emailErr)
+      return
+    }
     setLoading(true)
     try {
       const { user } = await authService.login(
@@ -245,11 +275,10 @@ function Login() {
         password,
         rememberMe
       )
-      localStorage.setItem('isLoggedIn', 'true')
-      localStorage.setItem('username', user.username)
-      navigate('/')
+      navigate(user.role === 'admin' ? '/admin' : '/index')
     } catch (error) {
       console.error('Login failed:', error)
+      message.error(error.message || '登录失败，请重试')
     } finally {
       setLoading(false)
     }
@@ -265,24 +294,25 @@ function Login() {
       {/* ── Right Panel: Login Form ── */}
       <div className={styles.rightPanel}>
         <form className={styles.form} onSubmit={handleSubmit}>
-          <h1 className={styles.title}>Welcome back!</h1>
-          <p className={styles.subtitle}>Please enter your details</p>
+          <h1 className={styles.title}>欢迎回来！</h1>
+          <p className={styles.subtitle}>请输入您的登录信息</p>
 
           {/* Email */}
           <div className={styles.field}>
-            <label className={styles.label}>Email</label>
+            <label className={styles.label}>邮箱</label>
             <input
               type="email"
               className={styles.input}
               value={email}
-              onChange={e => setEmail(e.target.value)}
-              placeholder="Enter your email"
+              onChange={handleEmailChange}
+              onBlur={handleEmailBlur}
+              placeholder="请输入邮箱"
             />
           </div>
 
           {/* Password */}
           <div className={styles.field}>
-            <label className={styles.label}>Password</label>
+            <label className={styles.label}>密码</label>
             <div className={styles.inputWrapper}>
               <input
                 type={showPassword ? 'text' : 'password'}
@@ -291,14 +321,14 @@ function Login() {
                 onChange={e => setPassword(e.target.value)}
                 onFocus={() => setPasswordFocused(true)}
                 onBlur={() => setPasswordFocused(false)}
-                placeholder="Enter your password"
+                placeholder="请输入密码"
               />
               <button
                 type="button"
                 className={styles.eyeBtn}
                 onClick={() => setShowPassword(v => !v)}
                 tabIndex={-1}
-                aria-label={showPassword ? 'Hide password' : 'Show password'}
+                aria-label={showPassword ? '隐藏密码' : '显示密码'}
               >
                 <EyeIcon visible={!showPassword} />
               </button>
@@ -313,23 +343,23 @@ function Login() {
                 checked={rememberMe}
                 onChange={e => setRememberMe(e.target.checked)}
               />
-              <span>Remember for 30 days</span>
+              <span>记住我 30 天</span>
             </label>
-            <a className={styles.forgotLink}>Forgot password?</a>
+            <a className={styles.forgotLink}>忘记密码？</a>
           </div>
 
           {/* Buttons */}
           <button type="submit" className={styles.loginBtn} disabled={loading}>
-            {loading ? 'Logging in...' : 'Log In'}
+            {loading ? '登录中...' : '登 录'}
           </button>
           <button type="button" className={styles.googleBtn}>
             <GoogleLogo />
-            <span>Log In with Google</span>
+            <span>使用 Google 登录</span>
           </button>
 
           {/* Footer */}
           <p className={styles.footer}>
-            Don&apos;t have an account? <a className={styles.signUpLink}>Sign Up</a>
+            还没有账号？<a className={styles.signUpLink}>立即注册</a>
           </p>
         </form>
       </div>
